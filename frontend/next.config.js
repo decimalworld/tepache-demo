@@ -9,7 +9,8 @@ const nextConfig = {
         pathname: '/development/**'
       }
     ]
-  }
+  },
+  output: 'standalone'
 }
 
 module.exports = nextConfig
