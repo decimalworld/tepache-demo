@@ -1,12 +1,12 @@
 import Button from "./Button";
 
-const ButtonGroup: React.FC<{bgColor: string}> = ({bgColor}) => {
+const ButtonGroup: React.FC<{bgColor: string, textColor: string}> = ({bgColor, textColor}) => {
   return (
     <div className="flex flex-col gap-4 uppercase">
-      <Button bgColor={bgColor} textColor="orange-100">
+      <Button bgColor={bgColor} textColor={textColor}>
         Add to cart
       </Button>
-      <Button textColor={bgColor} bgColor="orange-100">
+      <Button textColor={bgColor} bgColor={textColor}>
         Shop now
       </Button>
     </div>

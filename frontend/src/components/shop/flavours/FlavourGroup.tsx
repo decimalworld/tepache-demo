@@ -1,11 +1,11 @@
 import { ITEMS } from "@/utils/database"
-import FlavourItem from "./FlavourItem"
+import ItemCard from "../product/ItemCard"
 
 const FlavourGroup: React.FC = () => {
   return (
-  <div className="flex gap-10 my-5">
-    { ITEMS.map(item => <FlavourItem key={item.id} item={item}/>)}
-  </div>
+    <div className="flex gap-10 my-5">
+      { ITEMS.map(item => <ItemCard key={item.id} item={item}/>)}
+    </div>
   )
 }
 

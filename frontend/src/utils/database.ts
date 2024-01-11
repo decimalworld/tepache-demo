@@ -1,4 +1,4 @@
-import { ShopItem } from './models';
+import { ShopItem, ShopPack } from './models';
 
 export const ITEMS: ShopItem[] = [{
   id: 'p1',
@@ -37,3 +37,19 @@ export const ITEMS: ShopItem[] = [{
   titleColor: 'yellow-400',
   description: 'Bold Kick of Ginger\nBubbly and Refreshing\nPerfectly Sweet'
 }]
+
+export const PACKS: ShopPack[] = [
+  {
+    id: 'pa1',
+    name: "Originales",
+    reviews: 179,
+    description: "Beloved Flavors\nHealthy Way to Hydrate\nGood for Groups",
+    image: "https://tepache-mock-1.s3.ap-southeast-1.amazonaws.com/development/general/originales-pack.jpg",
+    type: "Classics for a reason!",
+    marker: {
+      type: "originales",
+      amount: 12,
+      unit: "pack"
+    }
+  }
+]
