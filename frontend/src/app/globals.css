@@ -2,3 +2,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.signature-arrow {
+  overflow: visible;
+  clip-path: polygon(
+    0 40%, 20% 43.3%, 40% 45.7%, 60% 47.2%, 80% 47%, 90% 48%, 92% 47%, 
+        80% 25%, 82% 25%,
+        100% 50.5%, 
+        82% 75%, 80% 75%, 
+    92% 53%, 90% 54%, 80% 53%, 60% 52.2%, 40% 49.7%, 20% 46.3%, 0 42%);
+}

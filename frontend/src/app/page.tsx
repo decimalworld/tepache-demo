@@ -1,3 +1,5 @@
+import Footer from '@/components/footer/Footer'
+import IntroGroup from '@/components/intro/IntroGroup'
 import ShopFlavour from '@/components/shop/flavours/ShopFlavour'
 import ShopPack from '@/components/shop/packs/ShopPack'
 import TitleGroup from '@/components/title/TitleGroup'
@@ -8,7 +10,9 @@ export default function Home() {
       <TitleGroup/>
       <ShopFlavour/>
       <ShopPack/>
-      <div className="h-[1000px]"/>
+      <IntroGroup/>
+      <div className="h-[300px]"/>
+      <Footer/>
     </div>
   )
 }
