@@ -1,0 +1,72 @@
+on:
+  push:
+    branches: [ main ]
+
+name: AWS ECR push backend
+
+jobs:
+  deploy:
+    name: Backend Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-southeast-1
+        role-duration-seconds: 600
+        role-session-name: MySessionName
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build the image for testing
+      id: build-image
+      env:
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        RAILS_DB_HOST : ${{ secrets.RAILS_DB_HOST }}
+        RAILS_DB_PORT : ${{ secrets.RAILS_DB_PORT }}
+        RAILS_DB_TEST : ${{ secrets.RAILS_DB_TEST_DB }}
+        RAILS_DB_USER : ${{ secrets.RAILS_DB_TEST_USER }}
+        RAILS_DB_TEST_PASSWORD : ${{ secrets.RAILS_DB_TEST_PASSWORD }}
+      run: |
+        docker build --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY -t tepache_backend_test:latest ./backend/
+        docker run tepache_backend_test:latest rails RAILS_ENV=test db:migrate db:seed
+
+    - name: Run unitest on image
+      id: unit-test
+      run: docker run tepache_backend_test:latest rspec spec
+
+    - name: Run linting on image
+      id: linting
+      run: docker run tepache_backend_test:latest rubocop
+
+    - name: Run brakeman on image
+      id: brakeman
+      run: docker run tepache_backend_test:latest brakeman 
+
+    - name: Build, tag, and push the image to Amazon ECR
+      id: push-image
+      env:
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        RAILS_DB_HOST : ${{ secrets.RAILS_DB_HOST }}
+        RAILS_DB_PORT : ${{ secrets.RAILS_DB_PORT }}
+        RAILS_DB_TEST : ${{ secrets.RAILS_DB_DEV_DB }}
+        RAILS_DB_USER : ${{ secrets.RAILS_DB_DEV_USER }}
+        RAILS_DB_TEST_PASSWORD : ${{ secrets.RAILS_DB_DEV_PASSWORD }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ secrets.BACKEND_REPO_NAME }}
+        IMAGE_TAG: latest
+      run: |
+        # Build a docker container and push it to ECR 
+        docker build --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./backend/
+        docker run $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG rails RAILS_ENV=development db:migrate db:create
+        echo "Pushing image to ECR..."
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
