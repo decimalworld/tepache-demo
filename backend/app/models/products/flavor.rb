@@ -1,2 +1,4 @@
-class Products::Flavor < Product
-end 
+module Products
+  class Flavor < Product
+  end
+end

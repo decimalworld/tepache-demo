@@ -1,2 +1,4 @@
-class Products::Pack < Product
+module Products
+  class Pack < Product
+  end
 end

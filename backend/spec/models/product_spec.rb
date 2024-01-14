@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Product, type: :model do
+RSpec.describe Product do
   let(:product) { create(:product) }
 
   describe 'validation' do
@@ -11,6 +11,6 @@ RSpec.describe Product, type: :model do
   end
 
   describe 'association' do
-    it{ expect(product).to have_one(:image) } 
+    it { expect(product).to have_one(:image) }
   end
 end

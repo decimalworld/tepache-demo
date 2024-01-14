@@ -26,18 +26,24 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build the image for testing
-      id: build-image
-      env:
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        RAILS_DB_HOST : ${{ secrets.RAILS_DB_HOST }}
-        RAILS_DB_PORT : ${{ secrets.RAILS_DB_PORT }}
-        RAILS_DB_TEST : ${{ secrets.RAILS_DB_TEST_DB }}
-        RAILS_DB_USER : ${{ secrets.RAILS_DB_TEST_USER }}
-        RAILS_DB_TEST_PASSWORD : ${{ secrets.RAILS_DB_TEST_PASSWORD }}
-      run: |
-        docker build --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY -t tepache_backend_test:latest ./backend/
-        docker run tepache_backend_test:latest rails RAILS_ENV=test db:migrate db:seed
+    - name: Build the docker image for testing
+      uses: docker/build-push-action@v5
+      with:
+        context: ./backend/
+        file: ./backend/Dockerfile.development
+        load: true
+        tags: tepache_backend_test:latest
+        build-args: |
+          RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+          RAILS_DB_HOST=${{ secrets.RAILS_DB_HOST }}
+          RAILS_DB_PORT=${{ secrets.RAILS_DB_PORT }}
+          RAILS_DB_TEST=${{ secrets.RAILS_DB_TEST_DB }}
+          RAILS_DB_USER=${{ secrets.RAILS_DB_TEST_USER }}
+          RAILS_DB_TEST_PASSWORD=${{ secrets.RAILS_DB_TEST_PASSWORD }}  
+
+    - name: Prepare database
+      id: prepare-db-test
+      run: docker run tepache_backend_test:latest rails RAILS_ENV=test db:migrate db:seed
 
     - name: Run unitest on image
       id: unit-test
@@ -49,24 +55,25 @@ jobs:
 
     - name: Run brakeman on image
       id: brakeman
-      run: docker run tepache_backend_test:latest brakeman 
+      run: docker run tepache_backend_test:latest brakeman
+
+    - name: Build image for production
+      uses: docker/build-push-action@v5
+      with:
+        context: ./backend/
+        load: true
+        tags: ${{steps.login-ecr.outputs.registry}}/${{secrets.BACKEND_REPO_NAME}}:latest
+        build-args: |
+          RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
+          RAILS_DB_HOST=${{ secrets.RAILS_DB_HOST }}
+          RAILS_DB_PORT=${{ secrets.RAILS_DB_PORT }}
+          RAILS_DB_TEST=${{ secrets.RAILS_DB_TEST_DB }}
+          RAILS_DB_USER=${{ secrets.RAILS_DB_TEST_USER }}
+          RAILS_DB_TEST_PASSWORD=${{ secrets.RAILS_DB_TEST_PASSWORD }}
 
     - name: Build, tag, and push the image to Amazon ECR
       id: push-image
-      env:
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        RAILS_DB_HOST : ${{ secrets.RAILS_DB_HOST }}
-        RAILS_DB_PORT : ${{ secrets.RAILS_DB_PORT }}
-        RAILS_DB_TEST : ${{ secrets.RAILS_DB_DEV_DB }}
-        RAILS_DB_USER : ${{ secrets.RAILS_DB_DEV_USER }}
-        RAILS_DB_TEST_PASSWORD : ${{ secrets.RAILS_DB_DEV_PASSWORD }}
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: ${{ secrets.BACKEND_REPO_NAME }}
-        IMAGE_TAG: latest
       run: |
-        # Build a docker container and push it to ECR 
-        docker build --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./backend/
-        docker run $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG rails RAILS_ENV=development db:migrate db:create
         echo "Pushing image to ECR..."
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push ${{steps.login-ecr.outputs.registry}}/${{secrets.BACKEND_REPO_NAME}}:latest
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"

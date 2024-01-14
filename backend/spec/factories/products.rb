@@ -7,11 +7,11 @@ FactoryBot.define do
     trait :flavor do
       type { Products::Flavor.name }
     end
-    
+
     trait :pack do
       type { Products::Pack.name }
     end
 
-    initialize_with { type.present? ? type.constantize.new : Product.new}
+    initialize_with { type.present? ? type.constantize.new : Product.new }
   end
 end

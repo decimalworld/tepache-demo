@@ -11,6 +11,8 @@ services:
     command: bash -c 'npm run dev'
 
   backend:
+    env_file:
+      - ./backend/.env
     build:
       context: ./backend
       dockerfile: Dockerfile.development

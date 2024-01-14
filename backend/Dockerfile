@@ -2,8 +2,20 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.3.0
-ARG RAILS_MASTER_KEY
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+ARG RAILS_MASTER_KEY
+ARG RAILS_DB_HOST
+ARG RAILS_DB_PORT
+ARG RAILS_DB_DEV
+ARG RAILS_DB_USER
+ARG RAILS_DB_DEV_PASSWORD
+
+ENV RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+ENV RAILS_DB_HOST=${RAILS_DB_HOST}
+ENV RAILS_DB_PORT=${RAILS_DB_PORT}
+ENV RAILS_DB_DEV=${RAILS_DB_DEV}
+ENV RAILS_DB_USER=${RAILS_DB_USER}
+ENV RAILS_DB_DEV_PASSWORD=${RAILS_DB_DEV_PASSWORD}
 
 # Rails app lives here
 WORKDIR /rails
@@ -13,8 +25,9 @@ ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
-    RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+    RAILS_MASTER_KEY=$RAILS_MASTER_KEY 
 
+RUN echo $RAILS_MASTER_KEY
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
