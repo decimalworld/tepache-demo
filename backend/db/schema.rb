@@ -36,9 +36,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_12_102837) do
   enable_extension "xml2"
 
   create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "link", null: false
     t.string "imageable_type"
-    t.bigint "imageable_id"
+    t.uuid "imageable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable"

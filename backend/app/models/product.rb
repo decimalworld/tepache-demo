@@ -5,4 +5,5 @@ class Product < ApplicationRecord
 
   attribute :text_color, default: -> { 'orange-100' }
   attribute :bg_color, default: -> { 'red-500' }
+  attribute :title_color, default: -> { 'red-500' }
 end

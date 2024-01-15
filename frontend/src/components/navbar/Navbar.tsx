@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
     <div className="sticky top-0 z-40">
       <Announcement/>
       <div className="relative">
-        <Cart showCart={showCart} handleMouseLeave={() => setShowCart(false)}/>
+        <Cart showCart={showCart} handleClose={() => setShowCart(false)}/>
       </div>
       <NavbarItems handleShowCart={() => setShowCart(true)}/>
     </div>

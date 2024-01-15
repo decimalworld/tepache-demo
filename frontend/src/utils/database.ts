@@ -1,4 +1,4 @@
-import { ShopItem, ShopPack } from './models';
+import { Order, ShopItem, ShopPack } from './models';
 
 export const ITEMS: ShopItem[] = [{
   id: 'p1',
@@ -53,3 +53,17 @@ export const PACKS: ShopPack[] = [
     }
   }
 ]
+
+export const USER_ORDER: Order = {
+  entries: [
+    {
+      id: 'pa1',
+      name: "Originales",
+      reviews: 179,
+      description: "Beloved Flavors\nHealthy Way to Hydrate\nGood for Groups",
+      image: "https://tepache-mock-1.s3.ap-southeast-1.amazonaws.com/development/general/originales-pack.jpg",
+      type: "Classics for a reason!",
+      quantity: 1
+    }
+  ]
+}

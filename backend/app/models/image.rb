@@ -1,4 +1,21 @@
 class Image < ApplicationRecord
-  belongs_to :imageable, optional: true, polymorphic: true
-  validates :link, presence: true
+  belongs_to :imageable, polymorphic: true
+  before_destroy :remove_from_s3
+  after_save :generate_presign_url, if: :id_previously_changed?
+
+  attr_reader :presigned_url
+
+  def link
+    "#{ENV.fetch('RAILS_ENV', nil)}/#{imageable_type.underscore}/#{id}"
+  end
+
+  private
+
+  def generate_presign_url
+    @presigned_url = S3.object(link).presigned_url(:put, expires_in: 300) if S3.present?
+  end
+
+  def remove_from_s3
+    S3.object(link).delete if S3.present?
+  end
 end

@@ -1,21 +1,18 @@
-export interface ShopItem {
+export interface Product {
   id: string,
-  type: string,
   name: string,
   reviews: number,
   image: string,
-  textColor: string,
-  titleColor: string,
-  description: string 
+  type: string,
+  description: string
 }
 
-export interface ShopPack {
-  id: string,
-  type: string,
-  name: string,
-  reviews: number,
-  image: string,
-  description: string,
+export interface ShopItem extends Product {
+  textColor: string,
+  titleColor: string,
+}
+
+export interface ShopPack extends Product{
   marker: ShopMarker
 }
 
@@ -23,4 +20,8 @@ export interface ShopMarker {
   type: string,
   amount: number,
   unit: string
+}
+
+export interface Order {
+  entries: (Product & {quantity: number})[]
 }

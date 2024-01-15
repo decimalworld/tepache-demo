@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :image do
-    link { Faker::Internet.url }
+    imageable factory: :product
   end
 end

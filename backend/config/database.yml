@@ -84,6 +84,5 @@ test:
 #
 production:
   <<: *default
-  database: app_production
-  username: app
-  password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+  database: <%= ENV.fetch("RAILS_DB_DEV") { "app_development" } %>
+  password: <%= ENV.fetch("RAILS_DB_DEV_PASSWORD") { "password" } %>
