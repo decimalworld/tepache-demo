@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import ProgressPromote from "./ProgressPromote";
 
-const Cart: React.FC<{showCart: boolean, handleClose: () => void}> = ({showCart}) => {
+const Cart: React.FC<{showCart: boolean, handleClose: () => void}> = ({showCart, handleClose}) => {
   return (
     <div>
       <motion.div 
@@ -12,7 +12,7 @@ const Cart: React.FC<{showCart: boolean, handleClose: () => void}> = ({showCart}
         transition={{ease: "easeInOut", duration: .3}}
       >
         <div className="h-6 w-full flex my-2">
-          <div className=" close-button ml-auto mr-2 h-5 w-5 bg-orange-100"/>
+          <div className=" close-button ml-auto mr-2 h-5 w-5 bg-orange-100" onClick={handleClose}/>
         </div>
         <ProgressPromote/>
       </motion.div>

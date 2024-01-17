@@ -27,7 +27,6 @@ ENV RAILS_ENV="production" \
     BUNDLE_WITHOUT="development" \
     RAILS_MASTER_KEY=$RAILS_MASTER_KEY 
 
-RUN echo $RAILS_MASTER_KEY
 # Throw-away build stage to reduce size of final image
 FROM base as build
 

@@ -1,5 +1,5 @@
 import './globals.css'
-import Navbar from '@/components/navbar/Navbar'
+import Navbar from './_components/navbar/Navbar' 
 
 export default function RootLayout({
   children,
@@ -13,9 +13,9 @@ export default function RootLayout({
           TEPACHE: A fermented Mexican drink made from fresh pineapples! - De La Calle
         </title>
       </head>
-      <body className="min-w-[1000px] bg-orange-100">
-          <Navbar/>
-          {children}
+      <body className="min-w-[1000px]">
+        <Navbar/>
+        {children}
       </body>
     </html>
   )

@@ -1,12 +1,12 @@
-import Footer from '@/components/footer/Footer'
-import IntroGroup from '@/components/intro/IntroGroup'
-import ShopFlavour from '@/components/shop/flavours/ShopFlavour'
-import ShopPack from '@/components/shop/packs/ShopPack'
-import TitleGroup from '@/components/title/TitleGroup'
+import Footer from './_components/footer/Footer'
+import TitleGroup from './_components/title/TitleGroup'
+import ShopFlavour from './_components/shop/flavours/ShopFlavour'
+import ShopPack from './_components/shop/packs/ShopPack'
+import IntroGroup from './_components/intro/IntroGroup'
 
 export default function Home() {
   return (
-    <div className="overflow-clip">
+    <div className="overflow-clip bg-orange-100">
       <TitleGroup/>
       <ShopFlavour/>
       <ShopPack/>

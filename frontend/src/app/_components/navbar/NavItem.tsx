@@ -1,17 +1,6 @@
 'use client'
 import { PropsWithChildren, useState } from "react";
-import { motion } from "framer-motion";
-
-const DropDown: React.FC<{isExpand: boolean}> = ({isExpand}) => {
-  return(
-    <motion.span
-        animate={{rotate: isExpand ? 180 : 0}}
-        transition={{duration: 0.2}}
-        >
-          &#9650;
-      </motion.span>
-  )
-}
+import DropDown from "@/components/DropDown";
 
 const NavItem: React.FC<PropsWithChildren<{withDropDown?: boolean, onClick?: () => void}>> = ({children, withDropDown = true, onClick}) =>{
   const [isExpand, setIsExpand] = useState(false)

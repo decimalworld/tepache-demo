@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image"
 import ParadeGroup from "./ParadeGroup"
 import TitleText from './TitleText'
@@ -9,7 +10,7 @@ const TitleGroup: React.FC = () => {
     <>
       <div className="relative h-[750px] flex flex-col">
         <div className="w-full h-full -z-10 absolute">
-          <Image src={TITLE_IMAGE} alt='Title image' fill={true}/>
+          <Image src={TITLE_IMAGE} alt='Title image' fill priority/>
         </div>
         <div className="w-full flex m-auto">
           <TitleText/>
