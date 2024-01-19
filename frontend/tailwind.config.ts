@@ -34,6 +34,8 @@ const config: Config = {
     'bg-sky-500',
     'text-sky-500',
     'border-sky-500',
+    'bg-orange-500',
+    'text-orange-500',
   ],
   plugins: [],
 }

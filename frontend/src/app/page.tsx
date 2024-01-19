@@ -6,7 +6,7 @@ import IntroGroup from './_components/intro/IntroGroup'
 
 export default function Home() {
   return (
-    <div className="overflow-clip bg-orange-100">
+    <div className="overflow-hidden bg-orange-100">
       <TitleGroup/>
       <ShopFlavour/>
       <ShopPack/>

@@ -25,3 +25,19 @@ export interface ShopMarker {
 export interface Order {
   entries: (Product & {quantity: number})[]
 }
+
+export interface NavSubItemModel {
+  location: string,
+  link: string
+}
+
+export interface NavItemModel {
+  location: string, 
+  link: string, 
+  subItem?: NavSubItemModel[]
+}
+
+export interface Selection {
+  text: string,
+  value: string
+}
