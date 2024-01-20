@@ -1,9 +1,6 @@
-import { ForwardRefRenderFunction, forwardRef, useImperativeHandle, useState } from "react";
-
-export interface TextbaseInputHandlingRef {
-  getValue: () => any,
-  reset: () => void
-}
+import useInputElement from "@/hooks/useInputElement";
+import { InputHandlingImperative } from "@/utils/models";
+import { ForwardRefRenderFunction, forwardRef } from "react";
 
 interface InputProps {
     defaultValue?: string, 
@@ -13,30 +10,18 @@ interface InputProps {
     className?: string
 }
 
-const TextbaseInput: ForwardRefRenderFunction<TextbaseInputHandlingRef, InputProps> = ({defaultValue = '', placeholder, rows, type, className}, ref) => {
-  const [value, setValue] = useState(defaultValue)
+const TextbaseInput: ForwardRefRenderFunction<InputHandlingImperative, InputProps> = ({defaultValue = '', placeholder, rows, type, className}, ref) => {
   const Comp = type === 'textarea' ? 'textarea' : 'input'
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      getValue() {
-        return value
-      },
-      reset() {
-        setValue('')
-      }
-    })
-    )
+  const { data, updateOnChangeFn } = useInputElement(ref, defaultValue);
 
   return (
     <Comp 
               {...(type !== 'textarea' && {type: type})} 
               className={`border-slate-100 border-2 w-full rounded-sm px-2 resize-none ${className}`}
               placeholder={placeholder}
-              value={value}
+              value={data}
               {...(rows && Comp=='textarea' && {rows: rows})}
-              onChange={e => setValue(e.target.value)}
+              onChange={updateOnChangeFn}
               />
   )
 }

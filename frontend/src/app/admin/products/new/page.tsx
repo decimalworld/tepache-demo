@@ -1,48 +1,37 @@
 'use client'
 import AdminPageTemplate from "@/components/AdminPageTemplate"
 import InputWrapper from "./_components/InputWrapper"
-import { useRef } from "react"
 import Button from "@/components/Button"
-import SelectionInput, { SelectionInputHandlingRef } from "@/components/SelectionInput"
-import ImageInput, { ImageUploadRef } from "./_components/ImageInput"
+import SelectionInput from "@/components/SelectionInput"
+import ImageInput from "./_components/ImageInput"
 import { CATEGORIES, BACKGROUND_COLORS, TEXT_COLORS} from "@/utils/constants"
-import TextbaseInput, { TextbaseInputHandlingRef } from "@/components/TextbaseInput"
+import TextbaseInput from "@/components/TextbaseInput"
+import useForm from "@/hooks/useForm"
+import { motion } from "framer-motion"
+import useFetchFromServer from "@/hooks/useFetchFromServer"
 
 const NewProductPage: React.FC = () => {
-  type SelectionInputType = SelectionInputHandlingRef;
-  type ImageInputType = ImageUploadRef;
+  const {refsRecord, resetForm, getValues} = useForm([
+    'productNameRef',
+    'descriptionRef',
+    'imageRef',
+    'bgColorRef',
+    'textColorRef',
+    'categoryRef',
+    'priceRef'
+  ])
+  
+  const {productNameRef, descriptionRef, imageRef, bgColorRef, textColorRef, categoryRef, priceRef} = refsRecord
 
-  const productNameRef = useRef<TextbaseInputHandlingRef>(null);
-  const descriptionRef = useRef<TextbaseInputHandlingRef>(null);
-  const imageRef = useRef<ImageInputType>(null);
-  const bgColorRef = useRef<SelectionInputType>(null);
-  const textColorRef = useRef<SelectionInputType>(null);
-  const categoryRef = useRef<SelectionInputType>(null);
-  const priceRef = useRef<TextbaseInputHandlingRef>(null);
+  const { fetchDataFn, fetchState, data, error } = useFetchFromServer()
 
-  const handleSubmit = () => {
-    console.log(productNameRef?.current?.getValue())
-    console.log(descriptionRef?.current?.getValue())
-    console.log(imageRef?.current?.getValue())
-    console.log(bgColorRef?.current?.getValue())
-    console.log(categoryRef?.current?.getValue())
-    console.log(textColorRef?.current?.getValue())
-    console.log(priceRef.current!.getValue())
-  }
-
-  const handleCancel = () => {
-    productNameRef?.current?.reset()
-    descriptionRef?.current?.reset()
-    imageRef?.current?.reset()
-    bgColorRef?.current?.reset()
-    categoryRef?.current?.reset()
-    textColorRef?.current?.reset()
-    priceRef?.current?.reset()
+  const handleSubmit = async () => {
+    fetchDataFn('http://localhost:3000/products/flavors', { method: 'POST' });
   }
 
   return (
     <AdminPageTemplate title="Create product" width="725px">
-      <div className="bg-white p-4 flex flex-col gap-6">
+      <div className="bg-white p-4 flex flex-col gap-6 relative">
         <InputWrapper title="Product name">
           <TextbaseInput ref={productNameRef} type='text' placeholder="Product name"/>
         </InputWrapper>
@@ -78,11 +67,20 @@ const NewProductPage: React.FC = () => {
             <Button className="bg-blue-500 py-2 w-28 text-center rounded-md text-white" onClick={handleSubmit}>
               Submit item
             </Button>
-            <Button className="bg-gray-300 py-2 w-28 text-center rounded-md text-black" onClick={handleCancel}>
+            <Button className="bg-gray-300 py-2 w-28 text-center rounded-md text-black" onClick={resetForm}>
               Cancel
             </Button>
           </div>
         </InputWrapper>
+        {fetchState==='loading' && 
+        <div className="absolute -m-4 w-full h-full bg-black bg-opacity-25 flex">
+          <motion.div 
+            className="w-20 h-20 rounded-full border-slate-700 border-8 border-t-white m-auto opacity-75"
+            animate={{ rotate: 360 }}
+            transition={{repeat: Infinity, duration: 1.5, ease: 'linear' }}
+            />
+        </div>
+        }
       </div>
     </AdminPageTemplate>
   )

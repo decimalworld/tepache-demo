@@ -41,3 +41,8 @@ export interface Selection {
   text: string,
   value: string
 }
+
+export interface InputHandlingImperative {
+  getValue: () => any,
+  reset: () => void
+}

@@ -6,7 +6,7 @@ const ProgressBar: React.FC<{progress: number}> = ({progress}) => {
   
   useEffect(() => {
     setProgressWidth(barRef!.current!.offsetWidth * progress)
-  })
+  }, [progressWidth])
 
   return (
     <div className="h-6 mx-5 border-2 border-orange-100 flex" ref={barRef}>
