@@ -8,6 +8,7 @@ RSpec.describe Product do
     it { expect(product).to validate_length_of(:name).is_at_most(50) }
     it { expect(product).to validate_presence_of(:description) }
     it { expect(product).to validate_length_of(:description).is_at_most(300) }
+    it { expect(product).to validate_presence_of(:price) }
   end
 
   describe 'association' do

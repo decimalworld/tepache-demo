@@ -49,6 +49,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_12_102837) do
     t.string "type"
     t.string "text_color"
     t.string "title_color"
+    t.integer "price"
+    t.string "bg_color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

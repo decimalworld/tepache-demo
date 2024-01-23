@@ -11,7 +11,7 @@ module ErrorsHelper
         'activerecord.errors.record_invalid',
         record: exception.record.class.model_name.human
       ),
-      errors: exception.record&.errors&.messages
+      errors: exception.record&.errors&.full_messages
     ), status: :unprocessable_entity
   end
 end

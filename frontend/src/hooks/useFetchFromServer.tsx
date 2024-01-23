@@ -1,28 +1,38 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 const useFetchFromServer = () => {
   const [fetchState, setFetchState] = useState<'idle' | 'loading' | 'resolved' | 'error'>('idle');
-  const [data, setData] = useState();
-  const [error, setError] = useState<string>();
+  const [responseData, setResponseData] = useState<Response>();
+  const [error, setError] = useState<Record<string, any>>();
 
-  const fetchDataFn = (url: string, options = {}) =>{
+  const fetchDataFn = useCallback((fetchFn: () => Promise<Response>) =>{
     setFetchState('loading')
-    fetch(url, options)
-      .then(res => res.json())
+    fetchFn()
       .then(res => {
-        setData(res)
-        setFetchState('resolved')
+        if (!res.ok) {
+          res.json().then((parseError: Record<string, any>) => { 
+            setError(parseError)
+            setFetchState('error')
+          })
+        } else {
+          setFetchState('resolved')
+          setResponseData(res)
+        }
       })
-      .catch(err => {
-        setError(err)
-        setFetchState('error')
-      })
-  } 
+  }, [])
+
+  const resetState = useCallback(() => {
+    setFetchState('idle')
+    setResponseData(undefined)
+    setError(undefined)
+  }, [])
+
   return {
     fetchDataFn,
     fetchState,
-    data,
-    error
+    resetState,
+    responseData,
+    error,
   }
 }
 

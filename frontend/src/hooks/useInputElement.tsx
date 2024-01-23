@@ -1,5 +1,5 @@
 import { InputHandlingImperative } from "@/utils/models"
-import { ChangeEvent, ForwardedRef, useImperativeHandle, useState } from "react"
+import { ChangeEvent, ForwardedRef, useCallback, useImperativeHandle, useState } from "react"
 
 type HTMLElementWithValue = HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement
 
@@ -11,7 +11,7 @@ const useInputElement = (ref: ForwardedRef<InputHandlingImperative>, defaultValu
     reset() { setData(defaultValue) }
   }))
 
-  const updateOnChangeFn = (e: ChangeEvent<HTMLElementWithValue>) => setData(e?.target?.value)
+  const updateOnChangeFn = useCallback((e: ChangeEvent<HTMLElementWithValue>) => setData(e?.target?.value), [])
 
   return {
     data: data,

@@ -13,7 +13,8 @@ export default function RootLayout({
           TEPACHE: A fermented Mexican drink made from fresh pineapples! - De La Calle
         </title>
       </head>
-      <body className="min-w-[1000px] w-full">
+      <body className="min-w-[1000px]">
+        <div id="modal-root"/>
         <Navbar/>
         {children}
       </body>

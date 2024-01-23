@@ -7,7 +7,7 @@ const UPLOAD_IMAGE = "https://tepache-mock-1.s3.ap-southeast-1.amazonaws.com/dev
 
 const ImageInput: ForwardRefRenderFunction<InputHandlingImperative> = ({}, ref) => {
   const imageRef = useRef<HTMLInputElement>(null);
-  const { data, setData, updateOnChangeFn } = useInputElement(ref, null);
+  const { data, setData } = useInputElement(ref, null);
 
   const handleImageClick = () => {
     imageRef.current!.click()

@@ -1,14 +1,15 @@
 module Products
   class FlavorsController < ApplicationController
     def create
-      flavor = Products::Flavor.create!(flavor_param)
+      compacted_param = flavor_param.compact_blank
+      flavor = Products::Flavor.create!(compacted_param)
       render json: json_with_success(flavor)
     end
 
     private
 
     def flavor_param
-      params.permit(:name, :description, :text_color, :bg_color)
+      params.required(:flavor).permit(:name, :description, :text_color, :bg_color, :price)
     end
   end
 end

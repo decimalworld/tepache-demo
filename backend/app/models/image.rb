@@ -17,5 +17,6 @@ class Image < ApplicationRecord
 
   def remove_from_s3
     S3.object(link).delete if S3.present?
+  rescue Aws::S3::Errors::InvalidAccessKeyId
   end
 end

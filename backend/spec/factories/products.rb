@@ -3,6 +3,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     description { Faker::Lorem.sentence }
     type { nil }
+    price { 10 }
 
     trait :flavor do
       type { Products::Flavor.name }

@@ -13,7 +13,7 @@ const Cart: React.FC<{showCart: boolean, handleClose: () => void}> = ({showCart,
       >
         <div className="w-[475px]">
           <div className="h-6 flex my-2">
-            <div className="ml-auto mr-2 h-5 w-5 bg-orange-100 hover:cursor-pointer" onClick={handleClose}/>
+            <div className="ml-auto mr-2 h-5 w-5 bg-orange-100 hover:cursor-pointer cross-shape" onClick={handleClose}/>
           </div>
           <ProgressPromote/>
         </div>
