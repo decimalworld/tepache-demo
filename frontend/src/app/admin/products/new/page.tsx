@@ -57,7 +57,7 @@ const NewProductPage: React.FC = () => {
   const handleSubmit = async () => {
     const payload = getValues();
     setStep('create object')
-    fetchDataFn(createProductFn(payload));
+    fetchDataFn(createProductFn(payload, category.current!.getValue()));
   }
 
   const handleCloseModal = () => {
@@ -69,14 +69,13 @@ const NewProductPage: React.FC = () => {
   return (
     <>
       <Modal ref={dialogRef}>
-        {fetchState === 'error' && <ErrorModalBody title={error?.message} error={error?.errors[0]} handleClose={handleCloseModal}/>}
+        {fetchState === 'error' && <ErrorModalBody title={error?.message} error={Array.isArray(error?.errors) ? error?.errors[0] : error?.errors} handleClose={handleCloseModal}/>}
         {fetchState === 'resolved' && <SuccessModalBody handleClose={handleCloseModal}/>}
-        <></>
       </Modal>
       <AdminPageTemplate title="Create product" width="725px">
         <div className="bg-white p-4 flex flex-col gap-6 relative">
           <InputWrapper title="Product name">
-            <TextbaseInput ref={name} type='text' placeholder="Product name"/>
+            <TextbaseInput ref={name} type='textarea' placeholder="Product name" rows={2}/>
           </InputWrapper>
           <InputWrapper title="Description">
             <TextbaseInput ref={description} type='textarea' placeholder='Description' rows={3}/>

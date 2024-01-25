@@ -1,6 +1,6 @@
-const createProductFn = (params: Record<string, any>): () => Promise<Response> => {
+const createProductFn = (params: Record<string, any>, type: "flavors" | "packs" | "merchs"): () => Promise<Response> => {
   return () => fetch(
-    'http://localhost:3000/products/flavors',
+    `http://localhost:3000/products/${type}`,
     {
       method: "POST",
       headers: {

@@ -17,6 +17,7 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem 'active_model_serializers'
 gem 'aws-sdk-s3'
+gem 'kaminari'
 gem 'rack-cors'
 
 group :development, :test do

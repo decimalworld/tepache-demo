@@ -2,6 +2,8 @@ en:
   common_messages:
     success: Success.
     error: Error.
+    routing_error: Routing error.
+    not_found: "Route not found."
   activerecord:
     errors:
       record_invalid: "The %{record} is invalid."

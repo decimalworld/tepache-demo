@@ -12,7 +12,7 @@ const DescriptionGroup: React.FC<{item: ShopItem}> = ({ item }) => {
           { [...Array(5)].map((_, index) => <span key={index}>&#9733;</span>) }
         </span>
         <span className="mb-0 mt-auto text-lg">
-          {` ${reviews > 1 ? 'Reviews' : 'Review'} ${reviews}`}
+          {` ${(reviews || 0) > 1 ? 'Reviews' : 'Review'} ${reviews}`}
         </span>
       </div>
       <div>

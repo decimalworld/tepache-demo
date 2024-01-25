@@ -13,7 +13,11 @@ export const TEXT_COLORS: Selection[] = [
   { text: 'Emerald', value: 'emerald-500'},
 ];
 export const CATEGORIES: Selection[] = [
-  { text: 'Flavor', value: 'flavor'},
-  { text: 'Pack', value: 'pack'},
-  { text: 'Merch', value: 'merch'}
+  { text: 'Flavor', value: 'flavors'},
+  { text: 'Pack', value: 'packs'},
+  { text: 'Merch', value: 'merchs'}
 ];
+export const TAGS: Selection[] = [
+  { text: 'Thirst quencher!', value: 'thrist quencher'},
+  { text: 'Most unique!', value: 'most unique'},
+]

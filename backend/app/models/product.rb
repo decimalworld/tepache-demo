@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id          :uuid             not null, primary key
+#  name        :string(50)
+#  description :string(300)
+#  text_color  :string
+#  price       :integer
+#  bg_color    :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
 class Product < ApplicationRecord
   has_one :image, as: :imageable, dependent: :destroy
   validates :name, length: { maximum: 50 }, presence: true
@@ -8,7 +21,6 @@ class Product < ApplicationRecord
 
   attribute :text_color, default: -> { 'orange-100' }
   attribute :bg_color, default: -> { 'red-500' }
-  attribute :title_color, default: -> { 'red-500' }
 
   delegate :presigned_url, to: :image, allow_nil: true, prefix: true
 end

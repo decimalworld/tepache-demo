@@ -30,8 +30,8 @@ const ITEMS: {location: string, link: string, subItem?: {location: string, link:
 
 const Navbar: React.FC<PropsWithChildren> = ({children}) => {
   return (
-    <div className="flex w-full h-screen">
-      <div className="border-2 border-gray-100 flex flex-col h-[1080px] w-64 min-w-64 shadow-xl">
+    <div className="flex w-full h-fit">
+      <div className="border-2 border-gray-100 flex flex-col w-64 min-w-64 shadow-xl">
         <div className="h-20 border-b-2 border-gray-100 flex flex-col justify-center px-4">
           <div className="text-2xl font-bold text-blue-500">Admin</div>
           <div className="text-sm -my-2 text-gray-400">Tepache</div>

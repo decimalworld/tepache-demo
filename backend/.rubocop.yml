@@ -24,3 +24,5 @@ Style/Documentation:
   Enabled: false
 Lint/SuppressedException:
   Enabled: false
+Metrics/MethodLength:
+  Enabled: false

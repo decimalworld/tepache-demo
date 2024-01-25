@@ -4,10 +4,10 @@ import DescriptionGroup from "./DescriptionGroup";
 import ButtonGroup from "./ButtonGroup";
 
 const ItemCard: React.FC<{ item: ShopItem }> = ({ item }) => {
-  const {type, name , image, titleColor, textColor} = item;
+  const {type, name , image, bgColor, textColor} = item;
   return (
     <div className="min-w-[420px] w-[420px]">
-      <div className={`bg-${titleColor} text-${textColor} uppercase font-semibold py-1 px-2`}>{type}</div>
+      <div className={`bg-${bgColor} text-${textColor} uppercase font-semibold py-1 px-2`}>{type}</div>
       <div className="h-60 relative">
         <Image src={image} alt={name} fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
       </div>

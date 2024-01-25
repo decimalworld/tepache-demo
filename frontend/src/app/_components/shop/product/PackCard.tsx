@@ -12,7 +12,7 @@ const PackCard: React.FC<{ item: ShopPack }> = ({ item }) => {
         <Image src={image} alt={name} fill={true} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>
       </div>
       <div className={`py-6 px-8 border-2 border-white flex flex-col justify-between h-[410px]`}>
-        <DescriptionGroup item={{...item, textColor: "white",titleColor: "white"}}/>
+        <DescriptionGroup item={{...item, textColor: "white",bgColor: "white"}}/>
         <ButtonGroup bgColor="red-500" textColor="white"/>
       </div>
     </div>

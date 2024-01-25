@@ -23,6 +23,14 @@ module ResponseHelper
     }
   end
 
+  def json_with_pagination(message: success, data: nil, custom_serializer: nil, options: {})
+    {
+      status: SUCCESS,
+      message: message,
+      data: data ? pagination_json(data, custom_serializer: custom_serializer, options: options) : nil
+    }
+  end
+
   private
 
   def success
@@ -40,5 +48,24 @@ module ResponseHelper
     return if msg.nil? || !msg.is_a?(Array)
 
     Array(msg.last).first
+  end
+
+  def pagination_json(data, custom_serializer: nil, options: {})
+    pagination = {
+      limit_value: data.try(:limit_value) || 0,
+      current_page: data.try(:current_page) || 1,
+      next_page: data.try(:next_page),
+      prev_page: data.try(:prev_page),
+      total_pages: data.try(:total_pages) || 1,
+      total_item: data.try(:total_count)
+    }
+
+    options = { each_serializer: custom_serializer }.merge(options) if custom_serializer
+    options[:include] = '**'
+
+    {
+      pagination: pagination,
+      items: ActiveModelSerializers::SerializableResource.new(data, options).as_json
+    }
   end
 end

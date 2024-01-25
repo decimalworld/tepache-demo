@@ -1,7 +1,7 @@
 export interface Product {
   id: string,
   name: string,
-  reviews: number,
+  reviews?: number,
   image: string,
   type: string,
   description: string
@@ -9,7 +9,7 @@ export interface Product {
 
 export interface ShopItem extends Product {
   textColor: string,
-  titleColor: string,
+  bgColor: string,
 }
 
 export interface ShopPack extends Product{
