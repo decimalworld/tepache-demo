@@ -1,6 +1,6 @@
-const createProductFn = (params: Record<string, any>, type: "flavors" | "packs" | "merchs"): () => Promise<Response> => {
+const createProductFn = (type: "flavors" | "packs" | "merchs", params: Record<string, any>): () => Promise<Response> => {
   return () => fetch(
-    `http://localhost:3000/products/${type}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${type}`,
     {
       method: "POST",
       headers: {
@@ -11,4 +11,16 @@ const createProductFn = (params: Record<string, any>, type: "flavors" | "packs" 
   )
 }
 
-export { createProductFn }
+const indexProductFn = (type: "flavors" | "packs" | "merchs", params?: Record<string, any>): () => Promise<Response> => {
+  return () => fetch(
+      [`${process.env.PRIVATE_BACKEND_URL}/products/${type}`, new URLSearchParams(params)].join('?'),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    )
+}
+
+export { createProductFn, indexProductFn }

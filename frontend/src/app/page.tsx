@@ -4,7 +4,7 @@ import ShopFlavour from './_components/shop/flavours/ShopFlavour'
 import ShopPack from './_components/shop/packs/ShopPack'
 import IntroGroup from './_components/intro/IntroGroup'
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="overflow-hidden bg-orange-100">
       <TitleGroup/>

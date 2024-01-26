@@ -1,9 +1,9 @@
 import { ShopItem } from "@/utils/models";
 
 const DescriptionGroup: React.FC<{item: ShopItem}> = ({ item }) => {
-  const { textColor, name, reviews, description } = item;
+  const { text_color, name, reviews, description } = item;
   return (
-    <div className={`text-${textColor} flex flex-col gap-5 h-[350px] whitespace-pre-wrap`}>
+    <div className={`text-${text_color} flex flex-col gap-5 h-[350px] whitespace-pre-wrap`}>
       <div className={`text-5xl font-extrabold`}>
         {name}
       </div>

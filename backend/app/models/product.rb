@@ -23,4 +23,5 @@ class Product < ApplicationRecord
   attribute :bg_color, default: -> { 'red-500' }
 
   delegate :presigned_url, to: :image, allow_nil: true, prefix: true
+  delegate :full_link, to: :image, allow_nil: true, prefix: true
 end

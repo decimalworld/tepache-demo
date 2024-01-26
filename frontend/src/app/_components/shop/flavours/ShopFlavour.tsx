@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import FlavourGroup from "./FlavourGroup"
 
 const ShopFlavour: React.FC = () => {
@@ -6,7 +7,9 @@ const ShopFlavour: React.FC = () => {
       <div className="font-extrabold text-8xl text-center -rotate-2 text-red-500 my-16 overflow-hidden">
         Shop Flavours
       </div>
-      <FlavourGroup/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <FlavourGroup/>
+      </Suspense>
     </div>
   )
 }

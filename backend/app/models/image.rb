@@ -19,6 +19,10 @@ class Image < ApplicationRecord
     "#{ENV.fetch('RAILS_ENV', nil)}/#{imageable_type.underscore}/#{id}"
   end
 
+  def full_link
+    S3.object(link).public_url if S3.present?
+  end
+
   private
 
   def generate_presign_url

@@ -26,6 +26,16 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Build image for production
+      uses: docker/build-push-action@v5
+      with:
+        context: ./frontend/
+        load: true
+        tags: ${{steps.login-ecr.outputs.registry}}/${{secrets.FRONTEND_REPO_NAME}}:latest
+        build-args: |
+          PRIVATE_BACKEND_URL=${{ secrets.PRIVATE_BACKEND_URL }}
+          NEXT_PUBLIC_BACKEND_URL=${{ secrets.NEXT_PUBLIC_BACKEND_URL}}
+
     - name: Build, tag, and push the image to Amazon ECR
       id: build-image
       env:
@@ -34,7 +44,6 @@ jobs:
         IMAGE_TAG: latest
       run: |
         # Build a docker container and push it to ECR 
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./frontend/
         echo "Pushing image to ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"

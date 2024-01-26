@@ -2,14 +2,14 @@ export interface Product {
   id: string,
   name: string,
   reviews?: number,
-  image: string,
-  type: string,
+  image_full_link: string,
+  type?: string,
   description: string
 }
 
 export interface ShopItem extends Product {
-  textColor: string,
-  bgColor: string,
+  text_color: string,
+  bg_color: string,
 }
 
 export interface ShopPack extends Product{

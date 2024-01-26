@@ -57,7 +57,7 @@ const NewProductPage: React.FC = () => {
   const handleSubmit = async () => {
     const payload = getValues();
     setStep('create object')
-    fetchDataFn(createProductFn(payload, category.current!.getValue()));
+    fetchDataFn(createProductFn(category.current!.getValue(), payload));
   }
 
   const handleCloseModal = () => {
